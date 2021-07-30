@@ -53,9 +53,10 @@ def add_course_save(request):
             messages.error(request, "Failed to Add Course!")
             return HttpResponseRedirect('add_course')
 
-def add_student(request):
+def add_student(request, student_id):    
     courses = Courses.objects.all()
-    return render(request,"hod_template/add_student.html",{"courses": courses})
+    student=Students.objects.get(admin=student_id)
+    return render(request,"hod_template/add_student.html",{"courses": courses, "student": student})
 
 
 def add_student_save(request):
@@ -149,20 +150,34 @@ def edit_staff_save(request):
         email = request.POST.get('email')        
         address = request.POST.get('address')
 
-        user=CustomUser.objects.get(id=staff_id)
-        
-
         try:
-            user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=2)
-            user.staffs.address = address
-            user.save()
-            messages.success(request, "Staff Added Successfully!")
-            return HttpResponseRedirect('/add_staff')
-        except:
-            messages.error(request, "Failed to Add Staff!")
-            return HttpResponseRedirect('add_staff')
 
-     
+          user=CustomUser.objects.get(id=staff_id)
+          user.first_name=first_name
+          user.last_name=last_name
+          user.email=email
+          user.username=username
+          user.save()
+
+          staff_model=Staffs.objects.get(admin=staff_id)
+          staff_model.address=address
+          staff_model.save()
+
+          messages.success(request, "Successfully Editted Staff!")
+          return HttpResponseRedirect('/edit_staff/'+staff_id)
+
+
+        except:
+            messages.error(request, "Failed to Edit Staff!")
+            return HttpResponseRedirect('/edit_staff')
+
+def edit_student(request, student_id):
+    courses=Courses.objects.all()
+    student=Students.objects.get(admin=student_id)
+    return render(request,"hod_template/edit_student.html",{"courses":courses,"student":student}) 
+
+def edit_student_save(request):
+    pass
 
 
 
