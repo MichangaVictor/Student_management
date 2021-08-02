@@ -1,0 +1,35 @@
+<form role="form" action="{{ action_path }}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+
+    {% for field in form %}
+        <div class="card-body">
+            {{ field.errors }}
+            {{ field.label_tag}}        
+            {{ field }}
+        </div>
+    {% endfor %}    
+
+      
+
+        {% if messages %}
+       
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+           <div class="alert alert-danger" style="margin-top: 10px;">{{ message }}</div >
+           {% endif %}
+           {% if message.tags == 'success' %}
+           <div class="alert alert-success" style="margin-top: 10px;">{{ message }}</div >
+           {% endif %}
+           {% endfor %}
+        
+        {% endif %}
+
+      </div>
+
+      <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-block">{{ bottom_text }}</button>
+      </div>
+      
+  </form>
+  
