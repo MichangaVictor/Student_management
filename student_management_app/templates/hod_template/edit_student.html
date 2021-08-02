@@ -3,7 +3,7 @@
 
 {% block page_title %}  
 
-Edit Student | {{ student.admin.username }} | #ID : {{student.admin.id}} 
+Edit Student | {{ username }} | #ID : {{ id }} 
 
 {% endblock page_title %}
 
@@ -20,93 +20,14 @@ Edit Student | {{ student.admin.username }} | #ID : {{student.admin.id}}
                     <h3 class="card-title">Edit Student</h3>
                   </div>
                   <!-- /.card-header -->
-                  <!-- form start -->
-                  <form role="form" action="/add_student_save" method="post">
-                    {% csrf_token %}
-                    
-                    <div class="card-body">
-                      <div class="form-group">
-                          <label>Email address</label>
-                          <input type="email" class="form-control" name="email" placeholder="Enter email" id="id_email" value="{{ student.admin.email }}">
-                      </div>
-
-                      <div class="form-group">
-                          <label>Username</label>
-                          <input type="text" class="form-control" name="username" placeholder="Username" id="id_username" value="{{ student.admin.username }}">
-                      </div>                      
-
-                      <div class="form-group">
-                          <label>First Name</label>
-                          <input type="text" class="form-control" name="first_name" placeholder="First Name" value="{{ student.admin.first_name }}">
-                      </div>
-
-                      <div class="form-group">
-                          <label>Last Name</label>
-                          <input type="text" class="form-control" name="last_name" placeholder="Last Name" value="{{ student.admin.last_name }}">
-                      </div>
-
-                      <div class="form-group">
-                          <label>Address</label>
-                          <textarea class="form-control" name="address" placeholder="Address" value="{{ student.address }}"></textarea>
-                      </div>
-
-                      <div class="form-group">
-                         <label>Courses</label>
-                         <select class="form-control" name="course">
-                            {% for course in courses %}
-
-                            <option value="{{course.id}}" {% if course.id == student.course_id.id %} selected {% endif %} >{{course.course_name}}</option>
-
-                            {% endfor %}
-
-                         </select>
-                      </div>
-
-                      <div class="form-group">
-                        <label>Sex</label>
-                        <select class="form-control" name="sex">
-                           <option {% if student.gender == "Male" %} selected {% endif %}>Male</option>
-                           <option {% if student.gender == "Female" %} selected {% endif %}>Female</option>
-                        </select>
-                     </div>
-
-                     <div class="form-group">
-                        <label>Session Start</label>
-                        <input type="date" class="form-control" name="session_start" placeholder="Session Start Year" value="{{ student.session_start_year|date:"Y-m-d" }}">
-                     </div>
-                     <div class="form-group">
-                        <label>Session End</label>
-                        <input type="date" class="form-control" name="session_end" placeholder="Session End Year" value="{{ student.session_end_year|date:"Y-m-d"  }}">
-                     </div>
-
-                        {% if messages %}
-                       
-                            {% for message in messages %}
-                            {% if message.tags == 'error' %}
-                           <div class="alert alert-danger" style="margin-top: 10px;">{{ message }}</div >
-                           {% endif %}
-                           {% if message.tags == 'success' %}
-                           <div class="alert alert-success" style="margin-top: 10px;">{{ message }}</div >
-                           {% endif %}
-                           {% endfor %}
-                        
-                        {% endif %}
-    
-                      </div>
-
-                      <div class="card-footer">
-                        <button type="submit" class="btn btn-primary btn-block">Add Student</button>
-                        </div>
-                      
-                  </div>
-                  </form>
+                  <!-- form start -->    
                   
+                  {% url 'edit_student_save' as action_path %}
 
-
+                  {% include 'hod_template/form.html' with messages=messages form=form action_path=action_path bottom_text="Update Student" %}
+                  
                 </div>
-                <!-- /.card -->
-    
-            
+                <!-- /.card -->     
     
               </div>
 
