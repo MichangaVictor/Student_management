@@ -208,7 +208,7 @@ def edit_student_save(request):
     else:  
         student_id=request.session.get('student_id')
         if student_id == None:
-            return HttpResponseRedirect("/manage_student")
+            return HttpResponseRedirect("/edit_student")
 
         form = EditStudentForm(request.POST, request.FILES)
         if form.is_valid():
