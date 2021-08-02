@@ -43,7 +43,6 @@ urlpatterns = [
     path('edit_staff_save',HodViews.edit_staff_save, name='edit_staff_save'),
     path('edit_student/<str:student_id>',HodViews.edit_student, name='edit_student'),
     path('edit_student_save',HodViews.edit_student_save, name='edit_student_save'),
-
     path('edit_subject/<str:subject_id>',HodViews.edit_subject, name='edit_subject'),
     path('edit_subject_save',HodViews.edit_subject_save, name='edit_subject_save'),
     path('edit_course/<str:course_id>',HodViews.edit_course, name='edit_course'),
