@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from student_management_app import views,HodViews
+from student_management_app import StaffViews, StudentViews, views,HodViews
 
 urlpatterns = [
     path('demo',views.showDemoPage),
     path('admin/', admin.site.urls),
-    path('',views.ShowloginPage),
+    path('',views.ShowloginPage, name='show_login'),
     path('doLogin',views.doLogin, name='doLogin'),
     path('get_user_details',views.GetUserDetails),
     path('logout_user',views.ShowloginPage, name='logout_user'),    
@@ -47,6 +47,16 @@ urlpatterns = [
     path('edit_subject_save',HodViews.edit_subject_save, name='edit_subject_save'),
     path('edit_course/<str:course_id>',HodViews.edit_course, name='edit_course'),
     path('edit_course_save',HodViews.edit_course_save, name='edit_course_save'),
+    path('manage_session',HodViews.manage_session, name='manage_session'),
+    path('add_session_save',HodViews.add_session_save, name='add_session_save'),
+
+    #staff urls
+    path('staff_home',StaffViews.staff_home, name='staff_home'),
+    path('staff_take_attendance',StaffViews.staff_take_attendance, name='staff_take_attendance'),
+
+    #student urls
+    path('student_home',StudentViews.student_home, name='student_home'),
+
 
    
 

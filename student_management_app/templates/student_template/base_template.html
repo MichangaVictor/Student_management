@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin | Dashboard </title>
+  <title>Student | Dashboard </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -47,7 +47,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>      
     </ul>
-    <h3>VickTech Admin Panel</h3>
+    <h3>VickTech Student Panel</h3>
 
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
@@ -64,7 +64,7 @@
 
   <!-- Main Sidebar Container -->
   
-  {% include 'hod_template/sidebar.html' with user=user id=id %}
+  {% include 'student_template/sidebar.html' with user=user id=id %}
 
   <!-- Content Wrapper. Contains page content -->
 
@@ -82,7 +82,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'student_home' %}">Home</a></li>
                 <li class="breadcrumb-item active">Dashboard</li>
               </ol>
             </div><!-- /.col -->
@@ -101,7 +101,7 @@
   </div>
   <!-- /.content-wrapper -->
  
-  {% include 'hod_template/footer.html' %}
+  {% include 'student_template/footer.html' %}
 
 
 </div>
