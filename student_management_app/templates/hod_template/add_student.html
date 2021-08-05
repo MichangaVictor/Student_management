@@ -1,11 +1,12 @@
 {% extends 'hod_template/base_template.html' %}
-{% load static %}
 
 {% block page_title %}  
 Add Student               
 {% endblock page_title %}
 
 {% block main_content %}
+
+{% load static %}
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -21,7 +22,6 @@ Add Student
                   <!-- form start -->
 
                   {% url 'add_student_save' as action_path %}
-
                   {% include 'hod_template/form.html' with messages=messages form=form action_path=action_path bottom_text="Add Student" %}
 
                 </div>
