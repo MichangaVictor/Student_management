@@ -27,9 +27,9 @@ def add_staff_save(request):
         address = request.POST.get('address')
 
         try:
-            user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=2)
-            user.staffs.address = address
-            user.save()
+            student = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=2)
+            student.staffs.address = address
+            student.save()
             messages.success(request, "Staff Added Successfully!")
             return HttpResponseRedirect(reverse('add_staff'))
         except:
@@ -87,20 +87,21 @@ def add_student_save(request):
             profile_pic_url=fs.url(filename)
 
             try:
-                user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
-                user.students.address = address
+                student = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
                 course_obj=Courses.objects.get(id=course_id)
-                user.students.course_id=course_obj
                 session_year=SessionYearModel.object.get(id=session_year_id)
-                user.students.session_year_id=session_year 
-                user.students.gender=gender
-                user.students.profile_pic=profile_pic_url
-                user.save()
+                student.course_id=course_obj                
+                student.session_year_id=session_year 
+
+                student.address = address
+                student.gender=gender
+                student.profile_pic=profile_pic_url
+                # student.save()
                 messages.success(request, "Student Added Successfully!")
                 return HttpResponseRedirect(reverse('add_student'))
             except:
-                messages.error(request, "Failed to Add Student!")
-                return HttpResponseRedirect(reverse('add_student'))
+                 messages.error(request, "Failed to Add Student!")
+                 return HttpResponseRedirect(reverse('add_student'))
         else:
             form= AddStudentForm(request.POST)
             return render(request,"hod_template/add_student.html",{"form": form})
@@ -167,12 +168,12 @@ def edit_staff_save(request):
 
         try:
 
-          user=CustomUser.objects.get(id=staff_id)
-          user.first_name=first_name
-          user.last_name=last_name
-          user.email=email
-          user.username=username
-          user.save()
+          student=CustomUser.objects.get(id=staff_id)
+          student.first_name=first_name
+          student.last_name=last_name
+          student.email=email
+          student.username=username
+          student.save()
 
           staff_model=Staffs.objects.get(admin=staff_id)
           staff_model.address=address
@@ -196,7 +197,7 @@ def edit_student(request, student_id):
     form.fields['username'].initial=student.admin.username
     form.fields['address'].initial=student.address
     form.fields['course'].initial=student.course_id.id
-    form.fields['sex'].initial=student.gender
+    form.fields['gender'].initial=student.gender
     form.fields['session_year_id'].initial=student.session_year_id.id    
     return render(request,"hod_template/edit_student.html",{ "form":form, "id":student.id, "username":student.admin.username}) 
 
@@ -217,7 +218,7 @@ def edit_student_save(request):
             address = form.cleaned_data['address']
             session_year_id= form.cleaned_data['session_year_id']            
             course_id= form.cleaned_data['course']
-            sex= form.cleaned_data['sex']
+            gender= form.cleaned_data['gender']
 
             if request.FILES.get('profile_pic',False):
                 profile_pic = request.FILES['profile_pic']
@@ -228,18 +229,18 @@ def edit_student_save(request):
                 profile_pic_url=None    
 
             try:
-                user= CustomUser.objects.get(id=student_id)
-                user.first_name=first_name
-                user.last_name=last_name
-                user.username=username
-                user.email=email
-                user.save()
+                student= CustomUser.objects.get(id=student_id)
+                student.first_name=first_name
+                student.last_name=last_name
+                student.username=username
+                student.email=email
+                student.save()
 
                 student=Students.objects.get(admin=student_id)
                 student.address=address
                 session_year=SessionYearModel.object.get(id=session_year_id)
-                user.students.session_year_id=session_year                
-                student.gender=sex        
+                student.students.session_year_id=session_year                
+                student.gender=gender        
                 course=Courses.objects.get(id=course_id)
                 student.course_id=course
                 if profile_pic_url != None:
