@@ -47,7 +47,7 @@ class Courses(models.Model):
     course_name=models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    objects = models.Manager()
+    object = models.Manager()
 
 
 class Subjects(models.Model):

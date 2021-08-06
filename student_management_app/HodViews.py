@@ -88,22 +88,25 @@ def add_student_save(request):
 
             try:
                 student = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
-                course_obj=Courses.objects.get(id=course_id)
-                session_year=SessionYearModel.object.get(id=session_year_id)
-                student.course_id=course_obj                
-                student.session_year_id=session_year 
+                student.Students.address = address
 
-                student.address = address
-                student.gender=gender
-                student.profile_pic=profile_pic_url
-                # student.save()
+                course_obj = Courses.objects.get(id=course_id)
+                student.Students.course_id = course_obj
+
+                session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+                student.Students.session_year_id = session_year_obj
+
+                student.Students.gender = gender
+                student.Students.profile_pic = profile_pic_url
+                student.save()
                 messages.success(request, "Student Added Successfully!")
-                return HttpResponseRedirect(reverse('add_student'))
+                return redirect('add_student')
             except:
-                 messages.error(request, "Failed to Add Student!")
-                 return HttpResponseRedirect(reverse('add_student'))
+                messages.error(request, "Failed to Add Student!")
+                return redirect('add_student')
         else:
             form= AddStudentForm(request.POST)
+            #return render(request,"hod_template/add_student.html",{"form": form})
             return render(request,"hod_template/add_student.html",{"form": form})
 
 
@@ -142,7 +145,7 @@ def manage_student(request):
     return render(request,"hod_template/manage_student.html",{"students":students})
 
 def manage_course(request):
-    courses=Courses.objects.all()
+    courses=Courses.object.all()
     return render(request,"hod_template/manage_course.html",{"courses":courses}) 
 
 def manage_subject(request):
