@@ -27,7 +27,7 @@ class AddStudentForm(forms.Form):
     
     #For Displaying Session Years
     try:
-        session_years = SessionYearModel.object.all()
+        session_years = SessionYearModel.objects.all()
         session_year_list = []
         for session_year in session_years:
             single_session_year = (session_year.id, str(session_year.session_start_year)+" to "+str(session_year.session_end_year))
@@ -59,7 +59,7 @@ class EditStudentForm(forms.Form):
 
     #For Displaying Courses
     try:
-        courses = Courses.object.all()
+        courses = Courses.objects.all()
         course_list = []
         for course in courses:
             single_course = (course.id, course.course_name)
